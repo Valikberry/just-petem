@@ -1,0 +1,280 @@
+"use client"
+
+import { useState } from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { ChevronRight, ChevronLeft, Heart, Pill, ClipboardList, Syringe, PawPrint, Calendar, Utensils } from "lucide-react"
+import Footer from "@/components/footer"
+import ExpertCredibility from "@/components/expert-credibility"
+import PageHeader from "@/components/page-header"
+
+const FEATURE_CARDS = [
+  {
+    icon: Pill,
+    title: "Medication Tracker",
+    description: "Never miss a dose. Log schedules and stay ahead of refills.",
+    bgColor: "bg-violet-500",
+    iconBg: "bg-violet-400",
+  },
+  {
+    icon: ClipboardList,
+    title: "Pet Sitter Sheet",
+    description: "Total peace of mind. Give your sitter everything they need on one page.",
+    bgColor: "bg-pink-500",
+    iconBg: "bg-pink-400",
+    image: true,
+  },
+  {
+    icon: Syringe,
+    title: "Vaccination Record",
+    description: "Stay up to date. Track shots and upcoming due dates effortlessly.",
+    bgColor: "bg-teal-500",
+    iconBg: "bg-teal-400",
+  },
+  {
+    icon: PawPrint,
+    title: "Pet Health Summary",
+    description: "Your pet's cheat sheet — contacts, health info, and vital notes.",
+    bgColor: "bg-orange-500",
+    iconBg: "bg-orange-400",
+  },
+  {
+    icon: Calendar,
+    title: "Vet Visit Planner",
+    description: "Stay organized. Schedule and track all vet appointments in one place.",
+    bgColor: "bg-cyan-500",
+    iconBg: "bg-cyan-400",
+  },
+  {
+    icon: Utensils,
+    title: "Feeding Schedule",
+    description: "Simplify mealtime. Plan and track daily feeding routines.",
+    bgColor: "bg-lime-500",
+    iconBg: "bg-lime-400",
+  },
+]
+
+const CATEGORIES = ["All", "Health Records", "Vaccination Records", "Medication Trackers", "Care Sheets"]
+
+const ALL_ARTICLES = [
+  { label: "01", title: "Pet Health Records", description: "Generate health records for dogs, cats, horses and more.", category: "Health Records", url: "/tools/pet-health-records" },
+  { label: "02", title: "Pet Vaccination Records", description: "Track vaccine dates and upcoming due dates for any pet.", category: "Vaccination Records", url: "/tools/pet-vaccination-records" },
+  { label: "03", title: "Pet Medication Tracker", description: "Log medications, dosage, and refill schedules in one place.", category: "Medication Trackers", url: "/tools/pet-medication-tracker" },
+  { label: "04", title: "Pet Care Planner", description: "Plan and organise your pet's daily care, routines and schedules.", category: "Care Sheets", url: "/tools/pet-care-planner" },
+  { label: "05", title: "Pet Care Log", description: "Record daily care activities, feeding, and health observations.", category: "Care Sheets", url: "/tools/pet-care-log" },
+  { label: "06", title: "Vet Visit Tracker", description: "Log every vet appointment, diagnosis, and follow-up note.", category: "Health Records", url: "/tools/vet-visit-tracker" },
+  { label: "07", title: "Feeding Schedule", description: "Build a clear feeding plan for any pet type or life stage.", category: "Care Sheets", url: "/tools/feeding-schedule" },
+  { label: "08", title: "Pet Sitter Notes", description: "Give your sitter everything they need to care for your pet.", category: "Care Sheets", url: "/tools/pet-sitter-notes" },
+  { label: "09", title: "Pet Emergency Card", description: "Keep critical pet info ready for any emergency situation.", category: "Health Records", url: "/tools/pet-emergency-card" },
+  { label: "10", title: "Pet Contracts", description: "Generate sitting, walking, boarding and grooming agreements.", category: "Care Sheets", url: "/tools/pet-contracts" },
+  { label: "11", title: "Pet Profile", description: "Create a complete profile with your pet's key info and contacts.", category: "Health Records", url: "/tools/pet-profile" },
+  { label: "12", title: "Pet Passport", description: "Organise travel health records and documentation for your pet.", category: "Vaccination Records", url: "/tools/pet-passport" },
+  { label: "13", title: "Pet Planner", description: "Plan vet visits, medications, and care milestones all in one place.", category: "Care Sheets", url: "/tools/pet-planner" },
+  { label: "14", title: "Pet Report Card", description: "Generate daycare, boarding and grooming report cards instantly.", category: "Care Sheets", url: "/tools/pet-report-card" },
+  { label: "15", title: "Pet Grooming Forms", description: "Create grooming agreements, client forms and service records.", category: "Care Sheets", url: "/tools/pet-grooming-forms" },
+  { label: "16", title: "Pet Expense Tracker", description: "Track vet bills, food costs and pet care spending over time.", category: "Medication Trackers", url: "/tools/pet-expense-tracker" },
+  { label: "17", title: "Pet Memorial", description: "Create certificates, memory books and loss documents for your pet.", category: "Health Records", url: "/tools/pet-memorial" },
+  { label: "18", title: "Pet Adoption Certificate", description: "Generate adoption certificates for dogs, cats and more.", category: "Health Records", url: "/tools/pet-adoption-certificate" },
+  { label: "19", title: "Pet Resume", description: "Build a pet resume for rental applications and new homes.", category: "Health Records", url: "/tools/pet-resume" },
+  { label: "20", title: "Quality of Life Tracker", description: "Monitor your senior pet's daily wellbeing and symptom changes.", category: "Health Records", url: "/tools/pet-quality-of-life-tracker" },
+  { label: "21", title: "Reptile and Exotic Care", description: "Track habitat, feeding and health records for exotic pets.", category: "Vaccination Records", url: "/tools/reptile-pet-care" },
+]
+
+export default function HubPage() {
+  const [selectedCategory, setSelectedCategory] = useState("All")
+
+  const displayedArticles = (selectedCategory === "All" 
+    ? ALL_ARTICLES 
+    : ALL_ARTICLES.filter(article => article.category === selectedCategory)
+  )
+
+  return (
+    <div className="min-h-screen bg-white">
+      <PageHeader />
+      <div className="mx-auto max-w-[580px] px-4 pt-2 pb-8 sm:pb-10">
+        
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6 flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-1 text-sm text-neutral-600 hover:text-black transition-colors">
+            Home
+          </Link>
+          <span className="text-neutral-400">/</span>
+          <span className="text-sm text-neutral-900 font-medium">All Tools</span>
+        </div>
+        
+        {/* Hero Section */}
+        <section className="mb-10 text-center">
+          <h1 className="text-3xl sm:text-4xl font-bold text-black leading-tight">
+            Generate Personalized Pet Documents in Seconds
+          </h1>
+          <p className="mt-3 text-sm text-neutral-600 leading-relaxed font-normal">
+            Fill online, download as PDF instantly.<br />
+            Email to yourself or send to your vets. No sign up, no fees ever.
+          </p>
+        </section>
+
+        {/* Choose Your Pet Document */}
+        <section className="mb-10">
+          <h2 className="mb-4 text-lg font-semibold text-black">Top Tools Right Now</h2>
+          
+          <div className="grid grid-cols-2 gap-3">
+            {FEATURE_CARDS.map((card) => {
+              if (card.image) {
+                return (
+                  <div key={card.title} className="rounded-xl overflow-hidden border-2 border-black cursor-pointer hover:border-black/80 transition-colors h-[136px]" role="button" tabIndex={0}>
+                    <Image
+                      src="/images/pet-sitter-sheet.jpg"
+                      alt="Pet Sitter Sheet - Create instructions for pet sitters"
+                      width={260}
+                      height={136}
+                      loading="eager"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )
+              }
+              return (
+                <div
+                  key={card.title}
+                  className={`cursor-pointer rounded-xl p-4 transition-opacity hover:opacity-90 ${card.bgColor} text-white`}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`${card.title}: ${card.description}`}
+                >
+                  <div
+                    className={`mb-3 flex h-10 w-10 items-center justify-center rounded-lg ${card.iconBg}`}
+                    aria-hidden="true"
+                  >
+                    <card.icon className="h-5 w-5 text-white" />
+                  </div>
+                  <h3 className="text-sm font-semibold leading-tight">{card.title}</h3>
+                  <p className="mt-1.5 text-[12px] leading-snug text-white/85">
+                    {card.description}
+                  </p>
+                </div>
+              )
+            })}
+          </div>
+        </section>
+
+        {/* Browse Categories */}
+        <section className="mb-10">
+          <h2 className="mb-4 text-lg font-semibold text-black">All Pet Document Generators</h2>
+          <p className="text-base leading-relaxed text-neutral-700 font-normal mb-4">Your pet's paperwork, sorted. Pick a category and generate the document you need in seconds.</p>
+        </section>
+
+        {/* Dynamic Content Block */}
+        <section className="mb-10">
+          <div className="mb-3 flex items-baseline justify-between">
+            <h2 className="text-lg font-semibold text-black">
+              {selectedCategory === "All" ? "Browse Pet Document Types" : selectedCategory}
+            </h2>
+          </div>
+          <div className="overflow-hidden rounded-lg border border-neutral-200" role="region" aria-label="Pet documents list">
+            {displayedArticles.map((article, index) => (
+              <Link
+                key={`${article.category}-${article.label}`}
+                href={article.url}
+                className={`block px-4 py-3 transition-colors hover:bg-neutral-50 ${
+                  index !== displayedArticles.length - 1 ? "border-b border-neutral-100" : ""
+                }`}
+              >
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <p className="text-xs font-medium uppercase tracking-wider text-neutral-500">
+                      {article.label}
+                    </p>
+                    <p className="mt-1 text-base font-semibold text-black">{article.title}</p>
+                    <p className="mt-1 text-sm font-normal text-neutral-600">{article.description}</p>
+                  </div>
+                  <ChevronRight className="h-5 w-5 shrink-0 text-neutral-300 ml-2" aria-hidden="true" />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* Simple Pet Documents Section */}
+        <section className="mb-10">
+          <h2 className="mb-4 text-lg font-semibold text-black">Simple Pet Documents for Busy Owners</h2>
+          <p className="text-base leading-relaxed text-neutral-700 font-normal">
+            Managing pet health means tracking medications, vaccines, vet visits, and care instructions. Most owners rely on scattered notes or memory. That works until you need the info fast. These tools give you one place to organize what matters.
+          </p>
+        </section>
+
+        {/* Who Uses These Section */}
+        <section className="mb-10">
+          <h2 className="mb-4 text-lg font-semibold text-black">Who Uses These</h2>
+          <div className="rounded-2xl border-2 border-black p-4 space-y-4">
+            {[
+              { case: "USE CASE 1", title: "New pet owners setting up routines" },
+              { case: "USE CASE 2", title: "Owners with pets on daily medication" },
+              { case: "USE CASE 3", title: "Anyone boarding or traveling with pets" },
+              { case: "USE CASE 4", title: "Pet sitters who want clear instructions" },
+              { case: "USE CASE 5", title: "People without printers who fill online and email directly" },
+            ].map((item, index) => (
+              <div key={item.case} className={`${index !== 4 ? "border-b border-neutral-200 pb-4" : ""}`}>
+                <p className="text-xs font-medium uppercase tracking-wider text-neutral-500">
+                  {item.case}
+                </p>
+                <p className="mt-1 text-base font-normal text-black">{item.title}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Why It Works Section */}
+        <section className="mb-10">
+          <h2 className="mb-4 text-lg font-semibold text-black">Why It Works</h2>
+          <ol className="space-y-2">
+            <li className="text-base leading-relaxed text-neutral-700 font-normal">
+              <span className="font-semibold">1.</span> Each pet document is built for one job
+            </li>
+            <li className="text-base leading-relaxed text-neutral-700 font-normal">
+              <span className="font-semibold">2.</span> No extra features, no clutter
+            </li>
+            <li className="text-base leading-relaxed text-neutral-700 font-normal">
+              <span className="font-semibold">3.</span> Fill online from any device
+            </li>
+            <li className="text-base leading-relaxed text-neutral-700 font-normal">
+              <span className="font-semibold">4.</span> Download as PDF or send to your inbox
+            </li>
+            <li className="text-base leading-relaxed text-neutral-700 font-normal">
+              <span className="font-semibold">5.</span> No app to install
+            </li>
+            <li className="text-base leading-relaxed text-neutral-700 font-normal">
+              <span className="font-semibold">6.</span> No account required
+            </li>
+          </ol>
+        </section>
+
+        {/* Expert Credibility Section */}
+        <ExpertCredibility />
+
+        {/* Questions Section */}
+        <section>
+          <h2 className="mb-4 text-lg font-semibold text-black">Frequently Asked Questions</h2>
+          <div className="rounded-2xl border-2 border-black p-4 space-y-4">
+            {[
+              { q: "Are these pet documents free?", a: "Yes. No payment, no account, no hidden fees." },
+              { q: "What format do I get?", a: "PDF. Opens on any device, prints clean, easy to share." },
+              { q: "Can I use this for multiple pets?", a: "Yes. Generate a separate document for each pet." },
+              { q: "Do I need a printer?", a: "No. Fill online, save digitally, email directly. Go paperless and reduce waste." },
+              { q: "Is my data saved?", a: "No. Your data stays on your device unless you email yourself a copy." },
+              { q: "Why use digital pet documents?", a: "Less paper, less clutter, less hassle. Update anytime. Share instantly. Better for you, better for the planet." },
+            ].map((item, index) => (
+              <div
+                key={item.q}
+                className={`${index !== 5 ? "border-b border-neutral-200 pb-4" : ""}`}
+              >
+                <h3 className="text-base font-semibold text-black">{item.q}</h3>
+                <p className="mt-1 text-sm font-normal text-neutral-600">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+      <Footer />
+    </div>
+  )
+}
