@@ -241,10 +241,9 @@ export default function HubPage() {
           <h2 className="mb-4 text-lg font-semibold text-black">Top Tools Right Now</h2>
           <div className="grid grid-cols-2 gap-3">
             {FEATURE_CARDS.map((card) => (
-              <Link
+              <div
                 key={card.title}
-                href={card.url}
-                className={`rounded-xl p-4 transition-opacity hover:opacity-90 ${card.bgColor} text-white block`}
+                className={`rounded-xl p-4 ${card.bgColor} text-white block cursor-default`}
               >
                 <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-lg ${card.iconBg}`}>
                   <card.icon className="h-5 w-5 text-white" aria-hidden="true" />
@@ -253,7 +252,7 @@ export default function HubPage() {
                 <p className="mt-1.5 text-[12px] leading-snug text-white/85">
                   {card.description}
                 </p>
-              </Link>
+              </div>
             ))}
           </div>
         </section>
@@ -264,14 +263,9 @@ export default function HubPage() {
             Your pet's paperwork sorted. Pick a category and generate the document your pet needs in seconds.
           </p>
           <div className="overflow-hidden rounded-lg border border-neutral-200">
-            {ALL_ARTICLES.map((article, index) => (
-              <Link
-                key={article.label}
-                href={article.url}
-                className={`block px-4 py-3 transition-colors hover:bg-neutral-50 ${
-                  index !== ALL_ARTICLES.length - 1 ? "border-b border-neutral-100" : ""
-                }`}
-              >
+            {ALL_ARTICLES.map((article, index) => {
+              const baseClass = `block px-4 py-3 ${index !== ALL_ARTICLES.length - 1 ? "border-b border-neutral-100" : ""}`;
+              const inner = (
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <p className="text-xs font-medium uppercase tracking-wider text-neutral-500">
@@ -282,8 +276,17 @@ export default function HubPage() {
                   </div>
                   <ChevronRight className="h-5 w-5 shrink-0 text-neutral-300 ml-2" aria-hidden="true" />
                 </div>
-              </Link>
-            ))}
+              );
+              return article.url === "/tools/pet-health-records" ? (
+                <Link key={article.label} href={article.url} className={`${baseClass} transition-colors hover:bg-neutral-50`}>
+                  {inner}
+                </Link>
+              ) : (
+                <div key={article.label} className={`${baseClass} cursor-default`}>
+                  {inner}
+                </div>
+              );
+            })}
           </div>
         </section>
 

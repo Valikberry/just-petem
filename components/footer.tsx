@@ -20,18 +20,18 @@ export default function Footer() {
             <Link href="/tools" className="text-neutral-700 hover:text-black font-medium">
               All Tools
             </Link>
-            <Link href="/about" className="text-neutral-700 hover:text-black font-medium">
+            <span className="text-neutral-400 font-medium cursor-default">
               About
-            </Link>
-            <Link href="/blog" className="text-neutral-700 hover:text-black font-medium">
+            </span>
+            <span className="text-neutral-400 font-medium cursor-default">
               Blog
-            </Link>
-            <Link href="/privacy" className="text-neutral-700 hover:text-black font-medium">
+            </span>
+            <span className="text-neutral-400 font-medium cursor-default">
               Privacy
-            </Link>
-            <Link href="/contact" className="text-neutral-700 hover:text-black font-medium">
+            </span>
+            <span className="text-neutral-400 font-medium cursor-default">
               Contact
-            </Link>
+            </span>
           </div>
         </div>
 
@@ -39,9 +39,9 @@ export default function Footer() {
         <div className="border-t border-neutral-100 pt-4 text-center mx-auto max-w-2xl">
           <p className="text-xs text-neutral-500 leading-relaxed">
             This site uses cookies. By continuing to use it, you agree to our{' '}
-            <Link href="#cookie-policy" className="text-neutral-700 hover:text-black underline font-medium">
+            <span className="text-neutral-400 underline font-medium cursor-default">
               cookie policy
-            </Link>
+            </span>
             .
           </p>
         </div>

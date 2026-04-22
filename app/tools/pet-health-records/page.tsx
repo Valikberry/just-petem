@@ -341,10 +341,9 @@ export default function PetHealthRecordsHubPage() {
           </p>
           <div className="space-y-2">
             {TOOLS.map((tool) => (
-              <Link
+              <div
                 key={tool.url}
-                href={tool.url}
-                className={`flex items-center gap-3 p-4 rounded-lg border transition-colors ${tool.color}`}
+                className={`flex items-center gap-3 p-4 rounded-lg border cursor-default ${tool.color.split(' ').filter(c => !c.startsWith('hover:')).join(' ')}`}
               >
                 <span className="text-xl">{tool.emoji}</span>
                 <div className="flex-1">
@@ -352,7 +351,7 @@ export default function PetHealthRecordsHubPage() {
                   <p className="text-xs text-neutral-600">{tool.description}</p>
                 </div>
                 <ChevronRight className="h-4 w-4 text-neutral-300" />
-              </Link>
+              </div>
             ))}
           </div>
         </section>
@@ -423,18 +422,17 @@ export default function PetHealthRecordsHubPage() {
         <section>
           <h2 className="text-lg font-semibold text-black mb-4">Related Pet Document Generators</h2>
           <div className="space-y-2">
-            {RELATED_TOOLS.map((tool, index) => (
-              <Link
+            {RELATED_TOOLS.map((tool) => (
+              <div
                 key={tool.url}
-                href={tool.url}
-                className="flex items-center gap-3 p-4 rounded-lg bg-neutral-50 border border-neutral-100 hover:bg-neutral-100 transition-colors"
+                className="flex items-center gap-3 p-4 rounded-lg bg-neutral-50 border border-neutral-100 cursor-default"
               >
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-black">{tool.emoji} {tool.label}</p>
                   <p className="text-xs text-neutral-600 mt-0.5">{tool.description}</p>
                 </div>
                 <ChevronRight className="h-4 w-4 text-neutral-300 shrink-0" />
-              </Link>
+              </div>
             ))}
           </div>
         </section>
